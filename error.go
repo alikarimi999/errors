@@ -91,17 +91,22 @@ func (e *Error) Error() string {
 	// Otherwise print the error code & message.
 	if e.err != nil {
 		buf.WriteString(e.err.Error())
-		if e.relationContext != "" {
-			fmt.Fprintf(&buf, " (%s)", e.relationContext)
-		}
 	} else {
 		if e.code != "" {
 			fmt.Fprintf(&buf, "<%s> ", e.code)
 		}
-		buf.WriteString(e.message.String())
+		if e.message != nil {
+			buf.WriteString(e.message.String())
+		}
 	}
+
+	if e.relationContext != "" {
+		buf.WriteString(fmt.Sprintf(" related to (%s) ", e.relationContext))
+	}
+
 	return buf.String()
 }
+
 func ErrorOp(e error) Op {
 	if e == nil {
 		return ""
