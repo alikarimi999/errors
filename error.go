@@ -65,7 +65,7 @@ func ErrorCode(err error) ErrCode {
 		return ErrorCode(e.err)
 	}
 
-	return "unknoun error"
+	return ErrUnknown
 }
 
 func ErrorMsg(err error) string {
